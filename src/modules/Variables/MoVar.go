@@ -9,7 +9,7 @@ const (
 	//############# ARCHIVOS LOCALES ######################################
 
 	//FileConfigName contiene el nombre del archivo CFG
-	FileConfigName = "../../../Acfg.cfg"
+	FileConfigName = "Acfg.cfg"
 
 	//################ SECCIONES CFG  ######################################
 
