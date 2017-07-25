@@ -1,0 +1,95 @@
+<!--doctype html-->
+<!--doctype html-->
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>UploadFiles</title>
+
+    <!-- Bootstrap -->
+    {{template "estilos_ticket"}}
+    <!--<link href="../Resources/Plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {{template "scripts_ticket"}}
+    <script type="text/javascript" src="/js/Timer/Timer.js"></script>
+
+
+</head>
+
+<body>
+
+    {{template "cabecera_ticket"}}
+    <section class="container">
+            <input type="hidden" id="Estado" name="Estado" value="{{.Estado}}"  readonly>
+            <input type="hidden" name="TimerOn" id="TimerOn" value={{.TimerOn}} readonly>
+
+        <div class="input-group">
+            <label for="Surtidor" class="input-group-addon">Surtidor: </label>
+            <input class="form-control" type="text" id="Surtidor" name="Surtidor" placeholder="Surtidor" value="{{.CodigoBarraSurtidor.CodigoBarraSurtidor}}" readonly>
+        </div>
+        <div class="input-group">
+            <label for="Ticket" class="input-group-addon">Ticket: </label>
+            <input class="form-control" type="text" id="Ticket" name="Ticket" placeholder="Ticket" value="{{.CodigoBarraTicket.CodigoBarraTicket}}" readonly>
+        </div>
+        <div class="input-group">
+            <label for="TimeIn" class="input-group-addon">TimeIn: </label>
+            <input class="form-control" type="text" id="TimeIn" name="TimeIn" value="{{.TimeIn.TimeIn}}" placeholder="TimeIn" readonly>
+        </div>
+        <div class="input-group">
+            <label for="TimeOut" class="input-group-addon">TimeOut: </label>
+            <input class="form-control" type="text" id="TimeOut" name="TimeOut" value="{{.TimeOut.TimeOut}}" placeholder="TimeOut" readonly>
+        </div>
+
+        <div class="input-group">
+            <label for="DuracionMinutos" class="input-group-addon">DuracionMinutos: </label>
+            <input class="form-control" type="text" id="DuracionMinutos" name="DuracionMinutos" value="{{.DuracionM.DuracionM}}" placeholder="DuracionMinutos" readonly>
+        </div>
+        <h1>&iquest;HA SURTIDO COMPLETO EL PEDIDO?</h1>
+        {{$estado := .Estado}} 
+        {{if $estado}}
+            <div class="alert alert-dismissable fade in alert-info" id="TimerDiv">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4>
+                    {{.Mensaje}}
+                </h4>
+            </div>
+        {{else}}
+             <div class="alert alert-dismissable fade in alert-danger" id="TimerDiv">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+                <h4>
+                    {{.Error}} 
+                </h4>
+            </div>
+        {{end}}
+
+
+            <div class="clearfix">&nbsp;</div>
+            <form method="POST" id="RespuestaForm">
+                <div class="input-group">
+                    <label for="Entrada" class="input-group-addon"> <span class="glyphicon glyphicon-barcode"></span> Respuesta: </label>
+                    <input type="text" class="form-control" id="EntradaR" name="Entrada">
+                </div>
+
+                <div class="clearfix">&nbsp;</div>
+                <button form="RespuestaForm" class="btn btn-primary" id="AceptarRespuesta"> Aceptar </button>
+                <!--<input type="submit" value="Aceptar" id="aceptar" name="aceptar" class="btn btn-primary">-->
+
+            </form>
+            <div class="clearfix">&nbsp;</div>
+    </section>
+
+    <aside></aside>
+
+    <footer></footer>
+</body>
+
+</html>
