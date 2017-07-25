@@ -36,9 +36,6 @@ func main() {
 	app.Get("/", Index.Get)
 	app.Post("/", Index.Get)
 
-	// app.Get("/Administrar", Adminsistrador.Get)
-	// app.Get("/Administrar", Adminsistrador.Get)
-
 	//###################### Listen Server #############################
 
 	if DataCfg.Puerto != "" {
