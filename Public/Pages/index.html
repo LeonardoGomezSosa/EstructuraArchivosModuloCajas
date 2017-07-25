@@ -1,4 +1,10 @@
+<!-- ############################## <  VISTA ALTA  > #####################################-->
+<!-- ############################## <  ExpresionAlta.html  > #####################################-->
+<!-- ############################## <  VISTA GENERAL > #####################################-->
+
+<!-- INICIO PAGINA -->
 <!--doctype html-->
+<!DOCTYPE html>
 
 <html>
 
@@ -7,34 +13,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>TicketChecker 0.1</title>
+    <title>Panel de administracion de TicketChecker 1.0</title>
+    <!-- Bootstrap -->
+    {{template "estilos_ticket"}}
+    <!--<link href="../Resources/Plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {{template "scripts_ticket"}}
+    <script type="text/javascript" src="/js/Expresion/Expresion.js"></script>
 
-
-  {{template "estilos_ticket"}}
-
-  {{template "scripts_ticket"}}
 
 </head>
+<!-- FINAL CABECERA ###################################################################################-->
+
+<!-- INICIO BODY -->
 
 <body>
+    {{template "cabecera_ticket"}}
+    <section style="padding-bottom: 5%;" id="SeccionCuerpo">
+        {{template "menu_ticket"}}
+        <div class="container-fluid">
+            <div class="side-body">
+                <h1>Panel de administracion de TicketChecker 1.0 <small>Bienvenido</small></h1>
+            </div>
+        </div>
 
-{{template "cabecera_ticket"}}
-    <section class="container">
-        <section>
-               
-                    <div class="alert alert-succes">
-                        <h1>Bienvenido </h1>
-                        <p>
-                            Para terminar sesion haga click aqu{i} Ingrese con su correo electronico a la siguiente direccion:
-                        </p>
-                        <p><a href="#">Salir</a></p>
-                         
-                    </div>
-                
-        </section>
+
     </section>
-    <aside></aside>
-    <footer class="nav navbar-fixed-bottom"> <CENTER> Hola</CENTER></footer>
+
 </body>
+
+
+<!-- FIN BODY -->
+
+<!-- FIN PAGINA -->
 
 </html>
