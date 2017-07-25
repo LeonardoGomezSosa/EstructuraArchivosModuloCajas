@@ -15,7 +15,7 @@ $("document").ready(function () {
         $('.side-body').removeClass('body-slide-in');
 
         /// uncomment code for absolute positioning tweek see top comment in css
-        //$('.absolute-wrapper').removeClass('slide-in');
+        $('.absolute-wrapper').removeClass('slide-in');
 
     });
 });

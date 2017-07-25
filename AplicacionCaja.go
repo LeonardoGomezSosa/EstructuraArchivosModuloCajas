@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"./src/controllers/admin"
 	"./src/controllers/index"
 	"./src/modules/Variables"
 	iris "gopkg.in/kataras/iris.v6"
@@ -35,6 +36,9 @@ func main() {
 
 	app.Get("/", Index.Get)
 	app.Post("/", Index.Get)
+
+	app.Get("/Administrar", Adminsistrador.Get)
+	app.Post("/Administrar", Adminsistrador.Get)
 
 	//###################### Listen Server #############################
 
