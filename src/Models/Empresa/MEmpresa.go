@@ -3,10 +3,10 @@ package EmpresaModel
 import (
 	"fmt"
 
-	"../../Modulos/Conexiones"
-	"../../Modulos/General"
+	"../../Modules/Conexiones"
+	"../../Modules/General"
 
-	"../../Modulos/Variables"
+	"../../Modules/Variables"
 	"gopkg.in/mgo.v2/bson"
 	elastic "gopkg.in/olivere/elastic.v5"
 )

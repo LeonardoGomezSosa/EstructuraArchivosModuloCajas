@@ -79,63 +79,6 @@ func ConstruirCadenas(texto string) (string, string) {
 		cadenafinal2 = cadenafinal2 + " " + value
 	}
 
-	fmt.Println("Primer Cadena: ", cadenafinal)
-	fmt.Println("Segunda Cadena: ", cadenafinal2)
-	return cadenafinal, cadenafinal2
-}
-
-//ValidaCadenas recibe un texto y regresa dos que se utilizarán para buscar en elastic
-func ValidaCadenas(texto string) (string, string) {
-
-	var palabras = []string{}
-	var final = []string{}
-	var final2 = []string{}
-	var cadenafinal string
-	var cadenafinal2 string
-
-	nuevacadena := strings.Replace(texto, "/", "\\/", -1)
-	nuevacadena = strings.Replace(nuevacadena, "~", "\\~", -1)
-	nuevacadena = strings.Replace(nuevacadena, "^", "\\^", -1)
-	nuevacadena = strings.Replace(nuevacadena, "+", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "[", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "]", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "{", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "}", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "(", "\\(", -1)
-	nuevacadena = strings.Replace(nuevacadena, ")", "\\)", -1)
-	nuevacadena = strings.Replace(nuevacadena, "|", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "=", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, ">", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "<", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "!", "", -1)
-	nuevacadena = strings.Replace(nuevacadena, "&", "", -1)
-
-	palabras = strings.Split(nuevacadena, " ")
-
-	for _, valor := range palabras {
-		if valor != "" {
-			palabrita := valor + "~2"
-			final = append(final, palabrita)
-		}
-	}
-
-	for _, valor := range palabras {
-		if valor != "" {
-			palabrita := `+` + `"` + valor + `"`
-			final2 = append(final2, palabrita)
-		}
-	}
-
-	for _, value := range final {
-		cadenafinal = cadenafinal + " " + value
-	}
-
-	for _, value := range final2 {
-		cadenafinal2 = cadenafinal2 + " " + value
-	}
-
-	fmt.Println("Primer Cadena: ", cadenafinal)
-	fmt.Println("Segunda Cadena: ", cadenafinal2)
 	return cadenafinal, cadenafinal2
 }
 
@@ -165,90 +108,68 @@ func ConstruirPaginacion(paginasTotales int, pag int) string {
 		rt = pag + 1
 	}
 
-	if pag > paginasTotales {
-		pag = paginasTotales
-	}
-	//inicio
 	var templateP string
+	templateP += `
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+			<li>
+				<a onclick="BuscaPagina(1)" aria-label="Inicio">
+				<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<li>
+				<a onclick="BuscaPagina(` + strconv.Itoa(lt) + `)" aria-label="Inicio">
+				<span aria-hidden="true">&lt;</span>
+				</a>
+			</li>			
+			`
 
-	templateP = `
+	templateP += ``
+	for i := 0; i <= paginasTotales; i++ {
+		if i == 1 {
+			if i == pag {
+				templateP += `<li class="active"><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			} else {
+				templateP += `<li><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			}
 
-    <div class="input-group col-md-8">
-      
-	  <span class="input-group-btn" onclick="BuscaPagina(1)">
-        <button class="btn btn-primary" type="button"><span aria-hidden="true">&laquo;</span></button>
-      </span>
-      
-	  <span class="input-group-btn" onclick="BuscaPagina(` + strconv.Itoa(lt) + `)">
-        <button class="btn btn-secondary" type="button"><span aria-hidden="true">&lt;</span></button>
-      </span>
- 
+		} else if i > 1 && i < 11 {
+			if i == pag {
+				templateP += `<li class="active"><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			} else {
+				templateP += `<li><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			}
+		} else if i > 11 && i == paginasTotales {
 
-      <input class="form-control" onkeypress="checkSubmit(this)" id="num" onchange="BuscaPagina(this.value)" value="` + strconv.Itoa(pag) + `" type="number" name="num" min="1" max="` + strconv.Itoa(paginasTotales) + `">
- 
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button"> de ` + strconv.Itoa(paginasTotales) + `</button>
-      </span>
-
-    
-      <span class="input-group-btn"  onclick="BuscaPagina(` + strconv.Itoa(rt) + `)">
-        <button class="btn btn-secondary" type="button"><span aria-hidden="true">&gt;</span></button>
-      </span>
-      <span class="input-group-btn" onclick="BuscaPagina(` + strconv.Itoa(paginasTotales) + `)">
-        <button class="btn btn-primary" type="button"><span aria-hidden="true">&raquo;</span></button>
-      </span>
-    </div>
-`
+			if i == pag {
+				templateP += `<li><span aria-hidden="true">...</span></li><li class="active"><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			} else {
+				templateP += `<li><span aria-hidden="true">...</span></li><li><a onclick="BuscaPagina(` + strconv.Itoa(i) + `)">` + strconv.Itoa(i) + `</a></li>`
+			}
+		}
+	}
+	templateP += `
+		<li>
+			<a onclick="BuscaPagina(` + strconv.Itoa(rt) + `)" aria-label="Inicio">
+				<span aria-hidden="true">&gt;</span>
+			</a>
+		</li>			
+		<li><a onclick="BuscaPagina(` + strconv.Itoa(paginasTotales) + `)" aria-label="Fin"><span aria-hidden="true">&raquo;</span></a></li></ul></nav>`
 	return templateP
 }
 
-//ConstruirPaginacion2 construtye la paginación en formato html para usarse en la página
-func ConstruirPaginacion2(paginasTotales int, pag int) string {
-	var lt int
-	var rt int
-
-	lt = 1
-	rt = paginasTotales
-
-	if pag > 2 {
-		lt = pag - 1
+//MiURI retorna la uri a la cual se hace la peticion, sin parametros
+func MiURI(URI, ID string) string {
+	arr := strings.Split(URI, "/")
+	nuevaURI := ""
+	for _, val := range arr {
+		if val != ID && val != "" {
+			// fmt.Println("[", i, "]", "=", val)
+			nuevaURI += "/" + val
+		}
 	}
-	if paginasTotales > pag {
-		rt = pag + 1
-	}
-
-	//inicio
-	var templateP string
-
-	templateP = `
-
-    <div class="input-group col-md-8">
-      
-	  <span class="input-group-btn" onclick="BuscaPagina(1)">
-        <button class="btn btn-primary" type="button"><span aria-hidden="true">&laquo;</span></button>
-      </span>
-      
-	  <span class="input-group-btn" onclick="BuscaPagina(` + strconv.Itoa(lt) + `)">
-        <button class="btn btn-secondary" type="button"><span aria-hidden="true">&lt;</span></button>
-      </span>
- 
-
-      <input class="form-control" onkeypress="checkSubmit(this)" id="num" onchange="BuscaPagina(this.value)" value="` + strconv.Itoa(pag) + `" type="number" name="paginasat" min="1" max="` + strconv.Itoa(paginasTotales) + `">
- 
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button"> de ` + strconv.Itoa(paginasTotales) + `</button>
-      </span>
-
-    
-      <span class="input-group-btn"  onclick="BuscaPagina(` + strconv.Itoa(rt) + `)">
-        <button class="btn btn-secondary" type="button"><span aria-hidden="true">&gt;</span></button>
-      </span>
-      <span class="input-group-btn" onclick="BuscaPagina(` + strconv.Itoa(paginasTotales) + `)">
-        <button class="btn btn-primary" type="button"><span aria-hidden="true">&raquo;</span></button>
-      </span>
-    </div>
-`
-	return templateP
+	fmt.Println(nuevaURI)
+	return nuevaURI
 }
 
 //EliminarEspaciosInicioFinal Elimina los espacios en blanco Al inicio y final de una cadena:
@@ -261,87 +182,28 @@ func EliminarEspaciosInicioFinal(cadena string) string {
 	return cadenalimpia
 }
 
-//EliminarMultiplesEspaciosIntermedios Elimina los espacios en blanco de una cadena:
-//recibe cadena, regresa cadena limpia  si solo contiene espacios
-func EliminarMultiplesEspaciosIntermedios(cadena string) string {
-	var cadenalimpia string
-	cadenalimpia = cadena
-	re := regexp.MustCompile("[\\s]+")
-	cadenalimpia = re.ReplaceAllString(cadenalimpia, " ")
-	return cadenalimpia
-}
+// SelectDistinctFromSliceString returns a unique subset of the string slice provided.
+func SelectDistinctFromSliceString(input []string) []string {
+	u := make([]string, 0, len(input))
+	m := make(map[string]bool)
 
-//LimpiarCadena Elimina los espacios en blanco de una cadena:
-//recibe cadena, regresa cadena limpia o "" si solo contiene espacios
-func LimpiarCadena(cadena string) string {
-	var cadenalimpia string
-	cadenalimpia = EliminarMultiplesEspaciosIntermedios(cadena)
-	cadenalimpia = EliminarEspaciosInicioFinal(cadenalimpia)
-	return cadenalimpia
-}
-
-//ValidaCadenaExpresion Sirve para reconocer si una cadena valida  :
-//recibe cadena, patron,  regresa true si la cadena coincide con el patron, false en otro caso
-func ValidaCadenaExpresion(cadena string, patron string) bool {
-	re := regexp.MustCompile(patron)
-	return re.MatchString(cadena)
-}
-
-//RFCValido Sirve para reconocer si un RFC es Válido:
-//recibe cadena, regresa true si es un RFC válido, false en otro caso
-func RFCValido(rfc string) bool {
-	re := regexp.MustCompile("^([a-zA-Z]{3}|[a-zA-Z]{4})\\d{6}[a-zA-Z0-9]{3}$")
-	return re.MatchString(rfc)
-}
-
-//CPValido Sirve para reconocer si un CP es Válido:
-//recibe cadena, regresa true si es un CP válido, false en otro caso
-func CPValido(CP string) bool {
-	re := regexp.MustCompile("^[0-9]{5}$")
-	return re.MatchString(CP)
-}
-
-//TelOCelValido Sirve para reconocer si un Telefono o Celular es Válido:
-//recibe cadena, regresa true si es un el valor recibido es un conjunto de 10 digitos, false en otro caso
-func TelOCelValido(CP string) bool {
-	re := regexp.MustCompile("^([0-9]{10}$")
-	return re.MatchString(CP)
-}
-
-//CSVValido Sirve para reconocer si un Telefono o Celular es Válido:
-//recibe cadena, regresa true si es un el valor recibido es un conjunto de 10 digitos, false en otro caso
-func CSVValido(archivo string) bool {
-	re := regexp.MustCompile("^.*(\\.csv)$")
-	return re.MatchString(archivo)
-}
-
-//CorreoValido Sirve para reconocer si un email Válido:
-//recibe cadena, regresa true si es un el valor recibido es un email(fair enough), false en otro caso
-func CorreoValido(correo string) bool {
-	re := regexp.MustCompile("^(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{1,3})$")
-	return re.MatchString(correo)
-}
-
-//CadenaVacia Sirve para reconocer si un RFC es Válido:
-//recibe cadena, regresa true si es un RFC válido, false en otro caso
-func CadenaVacia(cadena string) bool {
-	if cadena == "" {
-		return true
-	}
-	return false
-}
-
-//CargaComboMostrarEnIndex carga las opciones de mostrar en el index
-func CargaComboMostrarEnIndex(Muestra int) string {
-	var Cantidades = []int{5, 10, 15, 20}
-	templ := ``
-
-	for _, v := range Cantidades {
-		if Muestra == v {
-			templ += `<option value="` + strconv.Itoa(v) + `" selected>` + strconv.Itoa(v) + `</option>`
-		} else {
-			templ += `<option value="` + strconv.Itoa(v) + `">` + strconv.Itoa(v) + `</option>`
+	for _, val := range input {
+		if _, ok := m[val]; !ok {
+			m[val] = true
+			u = append(u, val)
 		}
 	}
-	return templ
+
+	return u
+}
+
+//CreaMapaDeSliceString crea un mapa de string string dados dos slices de string
+func CreaMapaDeSliceString(Campo1, Campo2 []string) map[string]string {
+	m := make(map[string]string)
+
+	for k, v := range Campo1 {
+		m[v] = Campo2[k]
+	}
+
+	return m
 }

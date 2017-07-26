@@ -85,10 +85,9 @@ type EAbreviaturaDatos struct {
 
 //SSesion estructura de variables de sesion de Usuarios del sistema
 type SSesion struct {
-	Name    string
-	Nivel   string
-	IDS     string
-	IsAdmin bool
+	Name          string
+	MenuPrincipal template.HTML
+	MenuUsr       template.HTML
 }
 
 //DataUnidad subestructura de Unidad

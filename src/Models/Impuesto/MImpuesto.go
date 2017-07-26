@@ -7,10 +7,10 @@ import (
 
 	"github.com/leekchan/accounting"
 
-	"../../Modelos/CatalogoModel"
-	"../../Modulos/Conexiones"
-	"../../Modulos/General"
-	"../../Modulos/Variables"
+	"../../Models/Catalogo"
+	"../../Modules/Conexiones"
+	"../../Modules/General"
+	"../../Modules/Variables"
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/olivere/elastic.v5"
 )

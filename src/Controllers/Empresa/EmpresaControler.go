@@ -7,10 +7,10 @@ import (
 	"regexp"
 	"strconv"
 
-	"../../Modelos/EmpresaModel"
-	"../../Modelos/MailModel"
-	"../../Modulos/CargaCombos"
-	"../../Modulos/Conexiones"
+	"../../Models/Email"
+	"../../Models/Empresa"
+	"../../Modules/CargaCombos"
+	"../../Modules/Conexiones"
 
 	"gopkg.in/kataras/iris.v6"
 	"gopkg.in/mgo.v2/bson"
@@ -36,7 +36,7 @@ var templatePaginacion = ``
 
 //IndexGet renderea al index de Empresa
 func IndexGet(ctx *iris.Context) {
-	ctx.Render("EmpresaIndex.html", nil)
+	ctx.Render("Empresa/EmpresaIndex.html", nil)
 }
 
 //IndexPost regresa la peticon post que se hizo desde el index de Empresa
@@ -86,7 +86,7 @@ func IndexPost(ctx *iris.Context) {
 
 	templatePaginacion = ConstruirPaginacion()
 
-	ctx.Render("EmpresaIndex.html", map[string]interface{}{
+	ctx.Render("Empresa/EmpresaIndex.html", map[string]interface{}{
 		"result":          resultados,
 		"cadena_busqueda": cadenaBusqueda,
 		"PaginacionT":     template.HTML(templatePaginacion),
@@ -98,7 +98,7 @@ func IndexPost(ctx *iris.Context) {
 
 //AltaGet renderea al alta de Empresa
 func AltaGet(ctx *iris.Context) {
-	ctx.Render("EmpresaAlta.html", nil)
+	ctx.Render("Empresa/EmpresaAlta.html", nil)
 }
 
 //AltaPost regresa la petición post que se hizo desde el alta de Empresa
@@ -123,7 +123,7 @@ func AltaPost(ctx *iris.Context) {
 	if EstatusPeticion {
 		SEmpresa.SEstado = false                                                           //En la vista los errores se manejan al reves para hacer uso del rellenado por defecto de Go
 		SEmpresa.SMsj = "La validación indica que el objeto capturado no puede procesarse" //La idea es después hacer un colector de errores y mensaje de éxito y enviarlo en esta variable.
-		ctx.Render("EmpresaAlta.html", SEmpresa)
+		ctx.Render("Empresa/EmpresaAlta.html", SEmpresa)
 	} else {
 
 		//Si no hubo error se procede a realizar alguna acción con el objeto, en este caso, una inserción.
@@ -132,12 +132,12 @@ func AltaPost(ctx *iris.Context) {
 			SEmpresa.SMsj = "Se ha realizado una inserción exitosa"
 
 			//SE PUEDE TOMA LA DECICIÓN QUE SE CREA MÁS PERTINENTE, EN ESTE CASO SE CONSIDERA EL DETALLE DEL OBJETO.
-			ctx.Render("EmpresaDetalle.html", SEmpresa)
+			ctx.Render("Empresa/EmpresaDetalle.html", SEmpresa)
 
 		} else {
 			SEmpresa.SEstado = false
 			SEmpresa.SMsj = "Ocurrió un error al insertar el Objeto, intente más tarde"
-			ctx.Render("EmpresaAlta.html", SEmpresa)
+			ctx.Render("Empresa/EmpresaAlta.html", SEmpresa)
 		}
 
 	}
@@ -212,7 +212,7 @@ func EditaGet(ctx *iris.Context) {
 		id = ""
 	}
 	fmt.Println(id)
-	ctx.Render("EmpresaEdita.html", Sempresa)
+	ctx.Render("Empresa/Detalle.html", Sempresa)
 }
 
 //EditaPost regresa el resultado de la petición post generada desde la edición de Empresa
@@ -569,7 +569,7 @@ func EditaPost(ctx *iris.Context) {
 			Sempresa.SMsj = "Se ha realizado la inserción."
 		}
 	}
-	ctx.Render("EmpresaEdita.html", Sempresa)
+	ctx.Render("Empresa/Detalle.html", Sempresa)
 
 }
 
@@ -577,12 +577,12 @@ func EditaPost(ctx *iris.Context) {
 
 //DetalleGet renderea al index.html
 func DetalleGet(ctx *iris.Context) {
-	ctx.Render("EmpresaDetalle.html", nil)
+	ctx.Render("Empresa/EmpresaDetalle.html", nil)
 }
 
 //DetallePost renderea al index.html
 func DetallePost(ctx *iris.Context) {
-	ctx.Render("EmpresaDetalle.html", nil)
+	ctx.Render("Empresa/EmpresaDetalle.html", nil)
 }
 
 //####################< RUTINAS ADICIONALES >##########################

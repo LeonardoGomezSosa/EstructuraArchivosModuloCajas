@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 
-	"./src/controllers/admin"
-	"./src/controllers/index"
-	"./src/modules/Variables"
+	"./src/Controllers/Admin"
+	"./src/Controllers/Empresa"
+	"./src/Controllers/Index"
+	"./src/Modules/Variables"
 	iris "gopkg.in/kataras/iris.v6"
 	"gopkg.in/kataras/iris.v6/adaptors/httprouter"
 	"gopkg.in/kataras/iris.v6/adaptors/view"
@@ -39,6 +40,11 @@ func main() {
 
 	app.Get("/Administrar", Adminsistrador.Get)
 	app.Post("/Administrar", Adminsistrador.Get)
+
+	app.Get("/Empresas", EmpresaControler.EditaGet)
+	app.Post("/Empresas", EmpresaControler.EditaPost)
+	app.Get("/TestMail", EmpresaControler.TestMail)
+	app.Post("/TestMail", EmpresaControler.TestMail)
 
 	//###################### Listen Server #############################
 

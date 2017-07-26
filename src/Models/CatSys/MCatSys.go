@@ -1,4 +1,4 @@
-package CatalogoModel
+package CatSysModel
 
 import (
 	"fmt"
@@ -17,6 +17,8 @@ import (
 
 //#########################< ESTRUCTURAS >##############################
 
+//########################< SECCION IMPUESTOS >#########################
+
 //CatalogoMgo estructura de Catalogos mongo
 type CatalogoMgo struct {
 	ID          bson.ObjectId `bson:"_id,omitempty"`
@@ -24,7 +26,6 @@ type CatalogoMgo struct {
 	Nombre      string        `bson:"Nombre"`
 	Descripcion string        `bson:"Descripcion"`
 	Valores     []ValoresMgo  `bson:"Valores"`
-	Editable    bool          `bson:"Editable"`
 	Estatus     bson.ObjectId `bson:"Estatus,omitempty"`
 	FechaHora   time.Time     `bson:"FechaHora"`
 }
@@ -41,21 +42,9 @@ type CatalogoElastic struct {
 
 //ValoresMgo subestructura de Catalogo
 type ValoresMgo struct {
-	ID            bson.ObjectId `bson:"_id,omitempty"`
-	Valor         string        `bson:"Valor"`
-	Editable      bool          `bson:"Editable"`
-	Estatus       bson.ObjectId `bson:"Estatus,omitempty"`
-	Clave         string        `bson:"Clave,omitempty"`
-	LocalOFederal string        `bson:"LocalOfederal,omitempty"`
-	Retencion     bool          `bson:"Retencion,omitempty"`
-	Traslado      bool          `bson:"Traslado,omitempty"`
-	TipoImpuesto  bson.ObjectId `bson:"TipoImpuesto,omitempty"`
-	Clasificacion bson.ObjectId `bson:"Clasificacion,omitempty"`
-	Decimales     int           `bson:"Decimales,omitempty"`
-	Variacion     float64       `bson:"Variacion,omitempty"`
-	ValorMaximo   float64       `bson:"ValorMaximo,omitempty"`
-	AplicaMoral   bool          `bson:"AplicaMoral,omitempty"`
-	AplicaFisica  bool          `bson:"AplicaFisica,omitempty"`
+	ID    bson.ObjectId `bson:"_id,omitempty"`
+	Valor string        `bson:"Valor"`
+	Clave string        `bson:"Clave,omitempty"`
 }
 
 //#########################< FUNCIONES GENERALES MGO >###############################

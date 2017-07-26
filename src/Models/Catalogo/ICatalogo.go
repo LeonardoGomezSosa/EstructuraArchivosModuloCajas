@@ -7,8 +7,8 @@ package CatalogoModel
 import (
 	"fmt"
 
-	"../../Modulos/Conexiones"
-	"../../Modulos/Variables"
+	"../../Modules/Conexiones"
+	"../../Modules/Variables"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -59,15 +59,7 @@ func (p CatalogoMgo) InsertaMgo() bool {
 
 //InsertaElastic es un método que crea un registro en Mongo
 func (p CatalogoMgo) InsertaElastic() bool {
-	var CatalogoE CatalogoElastic
-
-	CatalogoE.Clave = p.Clave
-	CatalogoE.Nombre = p.Nombre
-	CatalogoE.Descripcion = p.Descripcion
-	CatalogoE.Valores = p.Valores
-	CatalogoE.Estatus = RegresaNombreSubCatalogo(p.Estatus)
-	CatalogoE.FechaHora = p.FechaHora
-
+	CatalogoE := p.PreparaDatosELastic()
 	insert := MoConexion.InsertaElastic(MoVar.TipoCatalogo, p.ID.Hex(), CatalogoE)
 	if !insert {
 		fmt.Println("Error al insertar Catalogo en Elastic")
@@ -100,19 +92,10 @@ func (p CatalogoMgo) ActualizaMgo(campos []string, valores []interface{}) bool {
 }
 
 //ActualizaElastic es un método que encuentra y Actualiza un registro en Mongo
-func (p CatalogoMgo) ActualizaElastic() bool {
-	delete := MoConexion.DeleteElastic(MoVar.TipoCatalogo, p.ID.Hex())
-	if !delete {
-		fmt.Println("Error al actualizar Catalogo en Elastic")
-		return false
-	}
-
-	if !p.InsertaElastic() {
-		fmt.Println("Error al actualizar Catalogo en Elastic, se perdió Referencia.")
-		return false
-	}
-
-	return true
+func (p CatalogoMgo) ActualizaElastic() error {
+	CatalogoE := p.PreparaDatosELastic()
+	err := MoConexion.ActualizaElastic(MoVar.TipoCatalogo, p.ID.Hex(), CatalogoE)
+	return err
 }
 
 //##########################<< REEMPLAZA >>############################################
@@ -153,11 +136,11 @@ func (p CatalogoMgo) ConsultaExistenciaByFieldMgo(field string, valor string) bo
 	result := false
 	s, Catalogos, err := MoConexion.GetColectionMgo(MoVar.ColeccionCatalogo)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error al obtener la conexion en mongo.", err)
 	}
 	n, e := Catalogos.Find(bson.M{field: valor}).Count()
 	if e != nil {
-		fmt.Println(e)
+		fmt.Println("Error al consultar la existencia en Mongo", e)
 	}
 	if n > 0 {
 		result = true
@@ -217,4 +200,17 @@ func (p CatalogoMgo) EliminaByIDElastic() bool {
 		return false
 	}
 	return true
+}
+
+//PreparaDatosELastic  obtiene los datos por defecto de mongo y los convierte en string de tal forma que
+//se inserteadecuadamente en elastic
+func (p CatalogoMgo) PreparaDatosELastic() CatalogoElastic {
+	var CatalogoE CatalogoElastic
+	CatalogoE.Clave = p.Clave
+	CatalogoE.Nombre = p.Nombre
+	CatalogoE.Descripcion = p.Descripcion
+	CatalogoE.Valores = p.Valores
+	CatalogoE.Estatus = RegresaNombreSubCatalogo(p.Estatus)
+	CatalogoE.FechaHora = p.FechaHora
+	return CatalogoE
 }

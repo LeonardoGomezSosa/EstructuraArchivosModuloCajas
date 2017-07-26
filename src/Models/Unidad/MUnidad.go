@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"../../Modelos/CatalogoModel"
-	"../../Modulos/Conexiones"
-	"../../Modulos/General"
+	"../../Models/Catalogo"
+	"../../Modules/Conexiones"
+	"../../Modules/General"
 
-	"../../Modulos/Variables"
+	"../../Modules/Variables"
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/olivere/elastic.v5"
 )

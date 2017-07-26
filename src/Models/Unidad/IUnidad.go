@@ -1,15 +1,19 @@
-package EmpresaModel
+//#########################< MODELOS >#############################
+//#########################< IUnidad.go >###############################
+//################< ESTRUCTURA Y FUNCIONES >#######################
+
+package UnidadModel
 
 import (
 	"fmt"
 
-	"../../Modulos/Conexiones"
-	"../../Modulos/Variables"
+	"../../Modules/Conexiones"
+	"../../Modules/Variables"
 	"gopkg.in/mgo.v2/bson"
 )
 
-//IEmpresa interface con los métodos de la clase
-type IEmpresa interface {
+//IUnidad interface con los métodos de la clase
+type IUnidad interface {
 	InsertaMgo() bool
 	InsertaElastic() bool
 
@@ -33,14 +37,14 @@ type IEmpresa interface {
 //##################################<< INSERTAR >>###################################
 
 //InsertaMgo es un método que crea un registro en Mongo
-func (p EmpresaMgo) InsertaMgo() bool {
+func (p UnidadMgo) InsertaMgo() bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	err = Empresas.Insert(p)
+	err = Unidads.Insert(p)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -52,10 +56,10 @@ func (p EmpresaMgo) InsertaMgo() bool {
 }
 
 //InsertaElastic es un método que crea un registro en Mongo
-func (p EmpresaMgo) InsertaElastic() bool {
-	insert := MoConexion.InsertaElastic(MoVar.TipoEmpresa, p.ID.Hex(), p)
+func (p UnidadMgo) InsertaElastic() bool {
+	insert := MoConexion.InsertaElastic(MoVar.TipoUnidad, p.ID.Hex(), p)
 	if !insert {
-		fmt.Println("Error al insertar Empresa en Elastic")
+		fmt.Println("Error al insertar Unidad en Elastic")
 		return false
 	}
 	return true
@@ -65,16 +69,16 @@ func (p EmpresaMgo) InsertaElastic() bool {
 
 //ActualizaMgo es un método que encuentra y Actualiza un registro en Mongo
 //IMPORTANTE --> Debe coincidir el número y orden de campos con el de valores
-func (p EmpresaMgo) ActualizaMgo(campos []string, valores []interface{}) bool {
+func (p UnidadMgo) ActualizaMgo(campos []string, valores []interface{}) bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
 	var Abson bson.M
 	Abson = make(map[string]interface{})
 	for k, v := range campos {
 		Abson[v] = valores[k]
 	}
 	change := bson.M{"$set": Abson}
-	err = Empresas.Update(bson.M{"_id": p.ID}, change)
+	err = Unidads.Update(bson.M{"_id": p.ID}, change)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -85,15 +89,15 @@ func (p EmpresaMgo) ActualizaMgo(campos []string, valores []interface{}) bool {
 }
 
 //ActualizaElastic es un método que encuentra y Actualiza un registro en Mongo
-func (p EmpresaMgo) ActualizaElastic() bool {
-	delete := MoConexion.DeleteElastic(MoVar.TipoEmpresa, p.ID.Hex())
+func (p UnidadMgo) ActualizaElastic() bool {
+	delete := MoConexion.DeleteElastic(MoVar.TipoUnidad, p.ID.Hex())
 	if !delete {
-		fmt.Println("Error al actualizar Empresa en Elastic")
+		fmt.Println("Error al actualizar Unidad en Elastic")
 		return false
 	}
-	insert := MoConexion.InsertaElastic(MoVar.TipoEmpresa, p.ID.Hex(), p)
+	insert := MoConexion.InsertaElastic(MoVar.TipoUnidad, p.ID.Hex(), p)
 	if !insert {
-		fmt.Println("Error al actualizar Empresa en Elastic")
+		fmt.Println("Error al actualizar Unidad en Elastic")
 		return false
 	}
 	return true
@@ -102,10 +106,10 @@ func (p EmpresaMgo) ActualizaElastic() bool {
 //##########################<< REEMPLAZA >>############################################
 
 //ReemplazaMgo es un método que encuentra y Actualiza un registro en Mongo
-func (p EmpresaMgo) ReemplazaMgo() bool {
+func (p UnidadMgo) ReemplazaMgo() bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
-	err = Empresas.Update(bson.M{"_id": p.ID}, p)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
+	err = Unidads.Update(bson.M{"_id": p.ID}, p)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -115,16 +119,16 @@ func (p EmpresaMgo) ReemplazaMgo() bool {
 	return result
 }
 
-//ReemplazaElastic es un método que encuentra y reemplaza un Empresa en elastic
-func (p EmpresaMgo) ReemplazaElastic() bool {
-	delete := MoConexion.DeleteElastic(MoVar.TipoEmpresa, p.ID.Hex())
+//ReemplazaElastic es un método que encuentra y reemplaza un Unidad en elastic
+func (p UnidadMgo) ReemplazaElastic() bool {
+	delete := MoConexion.DeleteElastic(MoVar.TipoUnidad, p.ID.Hex())
 	if !delete {
-		fmt.Println("Error al actualizar Empresa en Elastic")
+		fmt.Println("Error al actualizar Unidad en Elastic")
 		return false
 	}
-	insert := MoConexion.InsertaElastic(MoVar.TipoEmpresa, p.ID.Hex(), p)
+	insert := MoConexion.InsertaElastic(MoVar.TipoUnidad, p.ID.Hex(), p)
 	if !insert {
-		fmt.Println("Error al actualizar Empresa en Elastic")
+		fmt.Println("Error al actualizar Unidad en Elastic")
 		return false
 	}
 	return true
@@ -133,13 +137,13 @@ func (p EmpresaMgo) ReemplazaElastic() bool {
 //###########################<< CONSULTA EXISTENCIAS >>###################################
 
 //ConsultaExistenciaByFieldMgo es un método que verifica si un registro existe en Mongo indicando un campo y un valor string
-func (p EmpresaMgo) ConsultaExistenciaByFieldMgo(field string, valor string) bool {
+func (p UnidadMgo) ConsultaExistenciaByFieldMgo(field string, valor string) bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
 	if err != nil {
 		fmt.Println(err)
 	}
-	n, e := Empresas.Find(bson.M{field: valor}).Count()
+	n, e := Unidads.Find(bson.M{field: valor}).Count()
 	if e != nil {
 		fmt.Println(e)
 	}
@@ -151,13 +155,13 @@ func (p EmpresaMgo) ConsultaExistenciaByFieldMgo(field string, valor string) boo
 }
 
 //ConsultaExistenciaByIDMgo es un método que encuentra un registro en Mongo buscándolo por ID
-func (p EmpresaMgo) ConsultaExistenciaByIDMgo() bool {
+func (p UnidadMgo) ConsultaExistenciaByIDMgo() bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
 	if err != nil {
 		fmt.Println(err)
 	}
-	n, e := Empresas.Find(bson.M{"_id": p.ID}).Count()
+	n, e := Unidads.Find(bson.M{"_id": p.ID}).Count()
 	if e != nil {
 		fmt.Println(e)
 	}
@@ -169,21 +173,21 @@ func (p EmpresaMgo) ConsultaExistenciaByIDMgo() bool {
 }
 
 //ConsultaExistenciaByIDElastic es un método que encuentra un registro en Mongo buscándolo por ID
-func (p EmpresaMgo) ConsultaExistenciaByIDElastic() bool {
-	result := MoConexion.ConsultaElastic(MoVar.TipoEmpresa, p.ID.Hex())
+func (p UnidadMgo) ConsultaExistenciaByIDElastic() bool {
+	result := MoConexion.ConsultaElastic(MoVar.TipoUnidad, p.ID.Hex())
 	return result
 }
 
 //##################################<< ELIMINACIONES >>#################################################
 
 //EliminaByIDMgo es un método que elimina un registro en Mongo
-func (p EmpresaMgo) EliminaByIDMgo() bool {
+func (p UnidadMgo) EliminaByIDMgo() bool {
 	result := false
-	s, Empresas, err := MoConexion.GetColectionMgo(MoVar.ColeccionEmpresa)
+	s, Unidads, err := MoConexion.GetColectionMgo(MoVar.ColeccionUnidad)
 	if err != nil {
 		fmt.Println(err)
 	}
-	e := Empresas.RemoveId(bson.M{"_id": p.ID})
+	e := Unidads.RemoveId(bson.M{"_id": p.ID})
 	if e != nil {
 		result = true
 	} else {
@@ -194,10 +198,10 @@ func (p EmpresaMgo) EliminaByIDMgo() bool {
 }
 
 //EliminaByIDElastic es un método que elimina un registro en Mongo
-func (p EmpresaMgo) EliminaByIDElastic() bool {
-	delete := MoConexion.DeleteElastic(MoVar.TipoEmpresa, p.ID.Hex())
+func (p UnidadMgo) EliminaByIDElastic() bool {
+	delete := MoConexion.DeleteElastic(MoVar.TipoUnidad, p.ID.Hex())
 	if !delete {
-		fmt.Println("Error al actualizar Empresa en Elastic")
+		fmt.Println("Error al actualizar Unidad en Elastic")
 		return false
 	}
 	return true
