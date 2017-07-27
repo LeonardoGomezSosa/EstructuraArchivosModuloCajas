@@ -427,9 +427,9 @@ function Test() {
 		method: "POST",
 		async: false,
 		data: {
-			Password: "",
-			ServerHost: "",
-			ServerPort: "",
+			Password: "x",
+			ServerHost: "y",
+			ServerPort: "z",
 			SenderAddr: "",
 		},
 		dataType: "json",
