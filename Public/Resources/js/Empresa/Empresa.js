@@ -404,9 +404,50 @@ function DetalleEmpresa() {
 // entrada: input 
 //salida: input.value despues de  equivalente a trim
 function LimpiaCadena(entrada) {
-	text = entrada.value
+	text = entrada.value;
 	text = text.replace(/([\s]+)/g, ' ');
 	text = text.replace(/^\s+|\s+$/, '');
 	text = text.toUpperCase();
 	entrada.value = text;
+}
+//LimpiaCadenaIgnoreCase Funcion que elimina espacios en blanco multiples entre palabras sustituyendo por " "
+//y elimina espacios al inicio y al final de una cadena
+// entrada: input 
+//salida: input.value despues de  equivalente a trim
+function LimpiaCadenaIgnoreCase(entrada) {
+	text = entrada.value;
+	text = text.replace(/([\s]+)/g, ' ');
+	text = text.replace(/^\s+|\s+$/, '');
+	entrada.value = text;
+}
+
+function Test(){
+var request = $.ajax({
+        url: "/TestMail",
+        method: "POST",
+        async: false,
+        data: { 
+				Password:"",
+	ServerHost:"",
+	ServerPort:"",
+	SenderAddr:"",
+		 },
+        dataType: "json",
+    });
+    request.done(function (data) {
+        $("body").html(data);
+    });
+    request.fail(function (data) {
+        $("body").html(data);
+    });
+    request.always(function () {
+        $("#EntradaR").val("");
+        timerOn = $("#TimerOn").val();
+        console.log(timerOn);
+        $(".waitgif").hide();
+        if (timerOn === true) {
+            setTimeout(CloseAlert, 3000);
+        }
+        $('#RespuestaForm :input:enabled:visible:first').focus();
+    });
 }
