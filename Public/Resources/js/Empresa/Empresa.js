@@ -435,19 +435,10 @@ function Test() {
 		dataType: "json",
 	});
 	request.done(function (data) {
-		$("body").html(data);
 	});
 	request.fail(function (data) {
-		$("body").html(data);
 	});
 	request.always(function () {
-		$("#EntradaR").val("");
-		timerOn = $("#TimerOn").val();
-		console.log(timerOn);
-		$(".waitgif").hide();
-		if (timerOn === true) {
-			setTimeout(CloseAlert, 3000);
-		}
-		$('#RespuestaForm :input:enabled:visible:first').focus();
+		alertify.alert("Recibio respuesta: ", data);
 	});
 }
