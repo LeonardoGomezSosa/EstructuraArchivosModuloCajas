@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-	
+
 	var validator = valida();
 	var checkboxes = $(":checkbox");
 	checkboxes.prop('checked', true);
@@ -42,28 +42,28 @@ $(document).ready(function () {
 	$("#CheckDtFiscales").click(function () {
 		if ($("#CheckDtFiscales").is(":checked")) {
 			$("#DtFiscales").show();
-		} else{
+		} else {
 			$("#DtFiscales").hide();
 		}
 	});
 	$("#CheckDtFiscalesDomicilio").click(function () {
 		if ($("#CheckDtFiscalesDomicilio").is(":checked")) {
 			$("#DtFiscalesDomicilio").show();
-		} else{
+		} else {
 			$("#DtFiscalesDomicilio").hide();
 		}
 	});
 	$("#CheckDtFacturacion").click(function () {
 		if ($("#CheckDtFacturacion").is(":checked")) {
 			$("#DtFacturacion").show();
-		} else{
+		} else {
 			$("#DtFacturacion").hide();
 		}
 	});
 	$("#CheckDtCorreoYNotificaciones").click(function () {
 		if ($("#CheckDtCorreoYNotificaciones").is(":checked")) {
 			$("#DtCorreoYNotificaciones").show();
-		} else{
+		} else {
 			$("#DtCorreoYNotificaciones").hide();
 		}
 	});
@@ -421,33 +421,33 @@ function LimpiaCadenaIgnoreCase(entrada) {
 	entrada.value = text;
 }
 
-function Test(){
-var request = $.ajax({
-        url: "/TestMail",
-        method: "POST",
-        async: false,
-        data: { 
-				Password:"",
-	ServerHost:"",
-	ServerPort:"",
-	SenderAddr:"",
-		 },
-        dataType: "json",
-    });
-    request.done(function (data) {
-        $("body").html(data);
-    });
-    request.fail(function (data) {
-        $("body").html(data);
-    });
-    request.always(function () {
-        $("#EntradaR").val("");
-        timerOn = $("#TimerOn").val();
-        console.log(timerOn);
-        $(".waitgif").hide();
-        if (timerOn === true) {
-            setTimeout(CloseAlert, 3000);
-        }
-        $('#RespuestaForm :input:enabled:visible:first').focus();
-    });
+function Test() {
+	var request = $.ajax({
+		url: "/TestMail",
+		method: "POST",
+		async: false,
+		data: {
+			Password: "",
+			ServerHost: "",
+			ServerPort: "",
+			SenderAddr: "",
+		},
+		dataType: "json",
+	});
+	request.done(function (data) {
+		$("body").html(data);
+	});
+	request.fail(function (data) {
+		$("body").html(data);
+	});
+	request.always(function () {
+		$("#EntradaR").val("");
+		timerOn = $("#TimerOn").val();
+		console.log(timerOn);
+		$(".waitgif").hide();
+		if (timerOn === true) {
+			setTimeout(CloseAlert, 3000);
+		}
+		$('#RespuestaForm :input:enabled:visible:first').focus();
+	});
 }
