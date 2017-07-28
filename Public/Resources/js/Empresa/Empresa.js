@@ -442,7 +442,6 @@ function TestMail() {
 	});
 	request.always(function (data) {
 		alertify.alert("Estado", "El Estado de la validacion es: "+ data.IEstatus);
-
 		if (data.IEstatus === true){
 			$("#Cifrado").val(data.IEstatus);
 		}else{

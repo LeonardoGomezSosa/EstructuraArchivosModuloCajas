@@ -450,31 +450,35 @@
                                 <fieldset>
                                     <legend>
                                         <label for="CheckDtFacturacion">Datos Facturaci&oacute;n <input type="checkbox" id="CheckDtFacturacion">  </label>
+
                                     </legend>
                                     <div id="DtFacturacion">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="Key">Key:</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.IEstatus}}
+                                            <label class="col-sm-4 control-label" for="Key"><span id="FileKeyLabel"><i class="fa fa-key fa-2x"></i></span> .key</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}"
+                                                <div class="input-group">
+                                                        <input  type="file" name="FileKey" id ="FileKey" text="Subir archivo"   class="form-control"/>
+                                                </div>
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}"
                                                 aria-required="true" aria-describedby="Key-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
-
                                                 <em id="Key-error" class="error help-block">{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.IMsj}}</em>
                                             </div>
                                             {{else}}
                                             <div class="col-sm-5">
-
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}">
+                                                <div class="input-group">
+                                                        <input  type="file" name="FileKey" id ="FileKey" text="Subir archivo" class="form-control"/>
+                                                </div>
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}">
                                             </div>
                                             {{end}}
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label" for="Cer">Cer:</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.IEstatus}}
+                                            <label class="col-sm-4 control-label" for="Cer"><span id="FileCertLabel"><i class="fa fa-certificate fa-2x"></i> .cer</span></label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
 
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}"
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}"
                                                 aria-required="true" aria-describedby="Cer-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
 
@@ -483,7 +487,7 @@
                                             {{else}}
                                             <div class="col-sm-5">
 
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}">
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}">
                                             </div>
                                             {{end}}
                                         </div>
@@ -492,7 +496,7 @@
                                             <label class="col-sm-4 control-label" for="Pem">Pem:</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
 
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}"
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}"
                                                 aria-required="true" aria-describedby="Pem-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
 
@@ -501,7 +505,7 @@
                                             {{else}}
                                             <div class="col-sm-5">
 
-                                                <input onblur="LimpiaCadena(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}">
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}">
                                             </div>
                                             {{end}}
                                         </div>
@@ -553,9 +557,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="Tipo">Servidor:</label> {{if .Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-                                                <!-- <select id="Tipo" name="Tipo" class="form-control selectpicker" aria-required="true" aria-describedby="Tipo-error" aria-invalid="true">
-                                                                {{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}
-                                                        </select> -->
+
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}">
 
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
@@ -565,9 +567,6 @@
                                             {{else}}
                                             <div class="col-sm-5">
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}">
-                                                <!-- <select id="Tipo" name="Tipo" class="form-control selectpicker">
-                                                            {{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}
-                                                        </select> -->
                                             </div>
                                             {{end}}
                                         </div>
