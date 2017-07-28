@@ -553,21 +553,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="Tipo">Servidor:</label> {{if .Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-                                                <!-- <select id="Tipo" name="Tipo" class="form-control selectpicker" aria-required="true" aria-describedby="Tipo-error" aria-invalid="true">
-                                                                {{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}
-                                                        </select> -->
-                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}">
-
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}" readonly>
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
-
                                                 <em id="Tipo-error" class="error help-block">{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.IMsj}}</em>
                                             </div>
                                             {{else}}
                                             <div class="col-sm-5">
-                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}">
-                                                <!-- <select id="Tipo" name="Tipo" class="form-control selectpicker">
-                                                            {{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}
-                                                        </select> -->
+                                                <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Tipo" id="Tipo" class="form-control" value="{{.Empresa.ECorreoYEnvioEmpresa.CorreoYEnvio.ETipoCorreoYEnvio.Tipo}}" readonly>
                                             </div>
                                             {{end}}
                                         </div>

@@ -441,7 +441,13 @@ function TestMail() {
 		alertify.alert("No se pudo realizar la petición.");
 	});
 	request.always(function (data) {
-		alertify.alert("El Estado de la validacion es: ", data.IEstatus);
-		console.log(data);
+		alertify.alert("Estado", "El Estado de la validacion es: "+ data.IEstatus);
+
+		if (data.IEstatus === true){
+			$("#Cifrado").val(data.IEstatus);
+		}else{
+			$("#Cifrado").val("");
+		}
+		console.log(data.IEstatus);
 	});
 }
