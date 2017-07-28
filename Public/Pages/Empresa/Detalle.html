@@ -456,7 +456,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="Key"><span id="FileKeyLabel"><i class="fa fa-key fa-2x"></i></span> .key</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-                                                <input  type="file" name="FileKey" id ="FileKey" text="Subir archivo"   class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FileKey" id ="FileKey" text="Subir archivo"   class="form-control" style="width:100%;"/>
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}"
                                                 aria-required="true" aria-describedby="Key-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
@@ -464,7 +464,7 @@
                                             </div>
                                             {{else}}
                                             <div class="col-sm-5">
-                                                <input  type="file" name="FileKey" id ="FileKey" text="Subir archivo" class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FileKey" id ="FileKey" text="Subir archivo" class="form-control" style="width:100%;"/>
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Key" id="Key" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EKeyDatosFactura.Key}}">
                                             </div>
                                             {{end}}
@@ -473,7 +473,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="Cer"><span id="FileCertLabel"><i class="fa fa-certificate fa-2x"></i> .cer</span></label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-                                                <input  type="file" name="FileCert" id ="FileCert" text="Subir archivo"   class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FileCert" id ="FileCert" text="Subir archivo"   class="form-control" style="width:100%;" />
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}"
                                                 aria-required="true" aria-describedby="Cer-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
@@ -481,7 +481,7 @@
                                             </div>
                                             {{else}}
                                             <div class="col-sm-5">
-                                                <input  type="file" name="FileCert" id ="FileCert" text="Subir archivo"   class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FileCert" id ="FileCert" text="Subir archivo"   class="form-control" style="width:100%;"/>
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Cer" id="Cer" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.ECerDatosFactura.Cer}}">
                                             </div>
                                             {{end}}
@@ -490,7 +490,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="Pem">Pem:</label> {{if .Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.IEstatus}}
                                             <div class="col-sm-5 has-feedback has-error">
-                                                <input  type="file" name="FilePem" id ="FilePem" text="Subir archivo"   class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FilePem" id ="FilePem" text="Subir archivo"   class="form-control" style="width:100%;"/>
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}"
                                                 aria-required="true" aria-describedby="Pem-error" aria-invalid="true">
                                                 <span class="glyphicon form-control-feedback glyphicon-remove"></span>
@@ -499,7 +499,7 @@
                                             </div>
                                             {{else}}
                                             <div class="col-sm-5">
-                                                <input  type="file" name="FilePem" id ="FilePem" text="Subir archivo"   class="form-control" style="width:100%;"/>
+                                                <input  type="file"  onchange="UpdateNextInput(this);"name="FilePem" id ="FilePem" text="Subir archivo"   class="form-control" style="width:100%;"/>
                                                 <input onblur="LimpiaCadenaIgnoreCase(this)" type="text" name="Pem" id="Pem" class="form-control" value="{{.Empresa.EDatosFacturaEmpresa.DatosFactura.EPemDatosFactura.Pem}}">
                                             </div>
                                             {{end}}
