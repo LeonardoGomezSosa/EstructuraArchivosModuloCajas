@@ -6,6 +6,7 @@ import (
 	"./src/Controllers/Admin"
 	"./src/Controllers/Empresa"
 	"./src/Controllers/Index"
+	"./src/Modules/Inicio"
 	"./src/Modules/Variables"
 	iris "gopkg.in/kataras/iris.v6"
 	"gopkg.in/kataras/iris.v6/adaptors/httprouter"
@@ -45,6 +46,10 @@ func main() {
 	app.Post("/Empresas", EmpresaControler.EditaPost)
 	app.Get("/TestMail", EmpresaControler.TestMail)
 	app.Post("/TestMail", EmpresaControler.TestMail)
+
+	//###################### Otros #####################################
+	Inicio.InitDatosMongo()
+	// Inicio.InitDatosElastic()
 
 	//###################### Listen Server #############################
 
