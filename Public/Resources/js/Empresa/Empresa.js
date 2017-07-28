@@ -427,18 +427,21 @@ function TestMail() {
 		method: "POST",
 		async: false,
 		data: {
-			Password: "x",
-			ServerHost: "y",
-			ServerPort: "z",
-			SenderAddr: "",
+			Password: $("#Pass").val(),
+			ServerHost: $("#Tipo").val(),
+			ServerPort: $("#Puerto").val(),
+			SenderAddr: $("#Correo").val(),
 		},
 		dataType: "json",
 	});
 	request.done(function (data) {
+		alertify.success("Peticion exitosa.");
 	});
 	request.fail(function (data) {
+		alertify.alert("No se pudo realizar la petición.");
 	});
-	request.always(function () {
-		alertify.alert("Recibio respuesta: ", data);
+	request.always(function (data) {
+		alertify.alert("El Estado de la validacion es: ", data.IEstatus);
+		console.log(data);
 	});
 }
