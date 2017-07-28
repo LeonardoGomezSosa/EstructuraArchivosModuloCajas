@@ -421,7 +421,7 @@ function LimpiaCadenaIgnoreCase(entrada) {
 	entrada.value = text;
 }
 
-function Test() {
+function TestMail() {
 	var request = $.ajax({
 		url: "/TestMail",
 		method: "POST",
