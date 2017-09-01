@@ -4,9 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
+	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 
+	"../../Models/Archivo"
 	"../../Models/Email"
 	"../../Models/Empresa"
 	"../../Modules/CargaCombos"
@@ -463,9 +467,11 @@ func EditaPost(ctx *iris.Context) {
 	// Indice:  Cer
 	// Indice:  Pem
 	MyDatosFactura := EmpresaModel.EDatosFacturaEmpresa{}
+
 	Key := ctx.FormValue("Key")
 	Cer := ctx.FormValue("Cer")
 	Pem := ctx.FormValue("Pem")
+
 	MyDatosFactura.DatosFactura.EKeyDatosFactura.Key = Key
 	MyDatosFactura.DatosFactura.ECerDatosFactura.Cer = Cer
 	MyDatosFactura.DatosFactura.EPemDatosFactura.Pem = Pem
@@ -662,6 +668,123 @@ func ConstruirPaginacion() string {
 	return templateP
 }
 
+// SubirArchivos maneja la carga de archivos  KEY, PEM Y CER
+func SubirArchivos(ctx *iris.Context) {
+	var Send ArchivoModel.SArchivo
+	ctx.Render("Empresa/SubirArchivos.html", Send)
+}
+
+// SubirArchivosPost maneja la carga de archivos  KEY, PEM Y CER en POST
+func SubirArchivosPost(ctx *iris.Context) {
+	var Send ArchivoModel.SArchivo
+	fKey, hKey, errKey := ctx.Request.FormFile("uploadKey")
+	if errKey != nil {
+		log.Println("Error: ", errKey)
+		http.Error(ctx.ResponseWriter, "Error subiendo el archivo Key.", http.StatusInternalServerError)
+		return
+	}
+
+	fCer, hCer, errCer := ctx.Request.FormFile("uploadCer")
+	if errCer != nil {
+		log.Println("Error: ", errCer)
+		http.Error(ctx.ResponseWriter, "Error subiendo el archivo Cer.", http.StatusInternalServerError)
+		return
+	}
+	fPem, hPem, errPem := ctx.Request.FormFile("uploadPem")
+	if errPem != nil {
+		log.Println("Error: ", errPem)
+		http.Error(ctx.ResponseWriter, "Error subiendo el archivo Pem.", http.StatusInternalServerError)
+		return
+	}
+	raiz := "Fiscal"
+	var datos []byte
+
+	fmt.Println("-------- Clave -------------")
+	fmt.Println(fKey)
+	fmt.Println(hKey)
+	entrada, errLecturaKey := hKey.Open()
+	if errLecturaKey != nil {
+		log.Println("Error: ", errLecturaKey)
+		http.Error(ctx.ResponseWriter, "Error al abrir el archivo.", http.StatusInternalServerError)
+		return
+	}
+	_, err := entrada.Read(datos)
+
+	filename := fmt.Sprintf("%v/%v", raiz, ctx.FormValue("Key"))
+	salida, err := os.Create(filename)
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al crear archivo destino.", http.StatusInternalServerError)
+		return
+	}
+	_, err = salida.Write(datos)
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al copiar datos hacia el  archivo destino.", http.StatusInternalServerError)
+	}
+
+	fmt.Println("-------- Certificado -------")
+	fmt.Println(fCer)
+	fmt.Println(hCer)
+	entrada, errLecturaCer := hCer.Open()
+	defer entrada.Close()
+	if errLecturaKey != nil {
+		log.Println("Error: ", errLecturaCer)
+		http.Error(ctx.ResponseWriter, "Error al abrir el archivo Cer.", http.StatusInternalServerError)
+		return
+	}
+	_, err = entrada.Read(datos)
+
+	filename = fmt.Sprintf("%v/%v", raiz, ctx.FormValue("Cer"))
+	salida, err = os.Create(filename)
+	defer salida.Close()
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al crear archivo destino.", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = salida.Write(datos)
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al copiar datos hacia el  archivo destino.", http.StatusInternalServerError)
+	}
+	fmt.Println("-------- PEM ---------------")
+	fmt.Println(fPem)
+	fmt.Println(hPem)
+	entrada, errLecturaPem := hCer.Open()
+	defer salida.Close()
+
+	if errLecturaPem != nil {
+		log.Println("Error: ", errLecturaCer)
+		http.Error(ctx.ResponseWriter, "Error al abrir el archivo Pem.", http.StatusInternalServerError)
+		return
+	}
+	_, err = entrada.Read(datos)
+
+	filename = fmt.Sprintf("%v/%v", raiz, ctx.FormValue("Pem"))
+	salida, err = os.Create(filename)
+	defer salida.Close()
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al crear archivo destino.", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = salida.Write(datos)
+	if err != nil {
+		log.Println("Error: ", err)
+		http.Error(ctx.ResponseWriter, "Error al copiar datos hacia el  archivo destino.", http.StatusInternalServerError)
+	}
+
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	ctx.Render("Empresa/SubirArchivos.html", Send)
+}
+
 //EliminarEspaciosInicioFinal Elimina los espacios en blanco Al inicio y final de una cadena:
 //recibe cadena, regresa cadena limpia de espacios al inicio o final o "" si solo contiene espacios
 func EliminarEspaciosInicioFinal(cadena string) string {
@@ -719,4 +842,16 @@ func CadenaVacia(cadena string) bool {
 		return true
 	}
 	return false
+}
+
+//ValidarExtension Sirve para reconocer si un archivo es Válido:
+//recibe nombreArchivo, extension, true si es un nombrearchivo termina con extension, false en otro caso
+func ValidarExtension(nombreArchivo string, extension string) bool {
+	re := regexp.MustCompile(fmt.Sprintf("^+(.%v)$", extension))
+	return re.MatchString(nombreArchivo)
+}
+
+// AjaxValidaFinExtension valida que un input contenga elemento de determinada extension, devuelve error en caso de que no sea la exrension correcta
+func AjaxValidaFinExtension() {
+
 }

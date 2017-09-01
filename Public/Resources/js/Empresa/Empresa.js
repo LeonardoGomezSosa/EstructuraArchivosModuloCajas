@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
 
+
+
 	var validator = valida();
 	var checkboxes = $(":checkbox");
 	checkboxes.prop('checked', true);
@@ -420,6 +422,20 @@ function LimpiaCadenaIgnoreCase(entrada) {
 	text = text.replace(/^\s+|\s+$/, '');
 	entrada.value = text;
 }
+function ChangeFieValue(file, extension) {
+	var path = $(file).val();
+	var filename = path.replace(/^.*\\/, "");
+	var ext = "(\." + extension + ")$";
+	var re = new RegExp(ext);
+	if (!re.exec(filename)) {
+		alertify.error("La extension del archivo no corresponde a la '." + extension + "'.");
+		$(file).prev('input').val("");
+		$(file).val("");
+	} else {
+		$(file).prev('input').val(filename);
+	}
+
+}
 
 function TestMail() {
 	var request = $.ajax({
@@ -441,13 +457,14 @@ function TestMail() {
 		alertify.alert("No se pudo realizar la petición.");
 	});
 	request.always(function (data) {
-		alertify.alert("Estado", "El Estado de la validacion es: "+ data.IEstatus);
+		alertify.alert("Estado", "El Estado de la validacion es: " + data.IEstatus);
 
-		if (data.IEstatus === true){
+		if (data.IEstatus === true) {
 			$("#Cifrado").val(data.IEstatus);
-		}else{
+		} else {
 			$("#Cifrado").val("");
 		}
 		console.log(data.IEstatus);
 	});
 }
+

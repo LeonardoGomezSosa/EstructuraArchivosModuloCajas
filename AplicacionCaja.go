@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"./src/Controllers/Archivo"
+
 	"./src/Controllers/Admin"
 	"./src/Controllers/Empresa"
 	"./src/Controllers/Index"
@@ -46,6 +48,32 @@ func main() {
 	app.Post("/Empresas", EmpresaControler.EditaPost)
 	app.Get("/TestMail", EmpresaControler.TestMail)
 	app.Post("/TestMail", EmpresaControler.TestMail)
+	app.Get("/SubirArchivo", EmpresaControler.SubirArchivos)
+	app.Post("/SubirArchivo", EmpresaControler.SubirArchivosPost)
+
+	//Index (Búsqueda)
+	app.Get("/Archivos", ArchivoControler.IndexGet)
+	app.Post("/Archivos", ArchivoControler.IndexPost)
+	app.Post("/Archivos/search", ArchivoControler.BuscaPagina)
+	app.Post("/Archivos/agrupa", ArchivoControler.MuestraIndexPorGrupo)
+
+	//Alta
+	app.Get("/Archivos/alta", ArchivoControler.AltaGet)
+	app.Post("/Archivos/alta", ArchivoControler.AltaPost)
+
+	//Edicion
+	app.Get("/Archivos/edita", ArchivoControler.EditaGet)
+	app.Post("/Archivos/edita", ArchivoControler.EditaPost)
+	app.Get("/Archivos/edita/:ID", ArchivoControler.EditaGet)
+	app.Post("/Archivos/edita/:ID", ArchivoControler.EditaPost)
+
+	//Detalle
+	app.Get("/Archivos/detalle", ArchivoControler.DetalleGet)
+	app.Post("/Archivos/detalle", ArchivoControler.DetallePost)
+	app.Get("/Archivos/detalle/:ID", ArchivoControler.DetalleGet)
+	app.Post("/Archivos/detalle/:ID", ArchivoControler.DetallePost)
+
+	//Rutinas adicionales
 
 	//###################### Otros #####################################
 	Inicio.InitDatosMongo()

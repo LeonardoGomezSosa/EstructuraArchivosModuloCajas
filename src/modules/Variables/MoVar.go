@@ -274,6 +274,13 @@ const (
 
 	//IndexElastic nombre del index a usar en elastic
 	IndexElastic = "minisuperampliado"
+	//ColeccionArchivo nombre de la coleccion de Archivo en mongo
+	ColeccionArchivo = "Archivo"
+
+	//Elastic---------------> Archivo
+
+	//TipoArchivo tipo a manejar en elastic
+	TipoArchivo = "Archivo"
 )
 
 //DataCfg estructura de datos del entorno

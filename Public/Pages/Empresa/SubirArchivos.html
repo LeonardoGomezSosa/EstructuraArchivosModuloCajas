@@ -1,0 +1,152 @@
+<!-- INICIO PAGINA -->
+<!--doctype html-->
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Subir Archivos</title>
+    <!-- Bootstrap -->
+    {{template "estilos_cajas"}}
+    <!--<link href="../Resources/Plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {{template "scripts_cajas"}}
+    <script type="text/javascript" src="/js/Empresa/Empresa.js"></script>
+    <style>
+        fieldset {
+            border: 1px solid gray;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        legend {
+            padding: 0.2em 0.5em;
+            border: 1px solid black;
+            color: #efefef;
+            background-color: #337ab7;
+            text-align: left;
+            width: 100%;
+        }
+    </style>
+
+</head>
+<!-- FINAL CABECERA ###################################################################################-->
+
+<body>
+    {{template "cabecera_cajas"}}
+    <div class="page-content">
+        <div class="row">
+            {{template "menu_cajas"}}
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="content-box-large">
+                        <h1>Empresas</h1>
+                        {{if .SEstado}} {{if .SMsj}}
+                        <div class="alert alert-danger alert-dismissible text-center" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><h4>{{.SMsj}}</h4></strong>
+                        </div>
+                        {{end}} {{else}} {{if .SMsj}}
+                        <div class="alert alert-success alert-dismissible text-center" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><h4>{{.SMsj}}</h4></strong>
+                        </div>
+                        {{end}} {{end}}
+                        <form id="Form_Alta_Empresa" class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+                            <fieldset>
+                                <legend>Datos de la Empresa</legend>
+                                <fieldset>
+                                    <legend>
+                                        <label for="CheckDtFacturacion">Datos Facturaci&oacute;n <input type="checkbox" id="CheckDtFacturacion">  </label>
+                                    </legend>
+                                    <div id="DtFacturacion">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="Key">Key:</label> {{if .Archivo.EKeyArchivo.IEstatus}}
+                                            <div class="col-sm-5 has-feedback has-error">
+                                                <input type="text" required  readonly name="Key" id="Key" class="form-control" value="{{.Archivo.EKeyArchivo.Key}}" aria-required="true" aria-describedby="Key-error"
+                                                    aria-invalid="true">
+                                                <input type="file" required  class="form-control"  id="uploadKey" name="uploadKey" onchange="ChangeFieValue(this,'key')">
+
+                                                <span class="glyphicon form-control-feedback glyphicon-remove"></span>
+                                                <em id="Key-error" class="error help-block">{{.Archivo.EKeyArchivo.IMsj}}</em>
+                                            </div>
+                                            {{else}}
+                                            <div class="col-sm-5">
+                                                <input type="text" required  readonly name="Key" id="Key" class="form-control" value="{{.Archivo.EKeyArchivo.Key}}">
+                                                <input type="file" required  class="form-control"  id="uploadKey" name="uploadKey"onchange="ChangeFieValue(this,'key')">
+
+                                            </div>
+                                            {{end}}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="Cer">Cer:</label> {{if .Archivo.ECerArchivo.IEstatus}}
+                                            <div class="col-sm-5 has-feedback has-error">
+                                                <input type="text" required  readonly name="Cer" id="Cer" class="form-control" value="{{.Archivo.ECerArchivo.Cer}}" aria-required="true" aria-describedby="Cer-error"
+                                                    aria-invalid="true">
+                                                <input type="file" required  class="form-control"  id="uploadCer" name="uploadCer" onchange="ChangeFieValue(this,'cer')">
+
+                                                <span class="glyphicon form-control-feedback glyphicon-remove"></span>
+                                                <em id="Cer-error" class="error help-block">{{.Archivo.ECerArchivo.IMsj}}</em>
+                                            </div>
+                                            {{else}}
+                                            <div class="col-sm-5">
+                                                <input type="text" required  readonly name="Cer" id="Cer" class="form-control" value="{{.Archivo.ECerArchivo.Cer}}">
+                                                <input type="file" required  class="form-control"  id="uploadCer" name="uploadCer" onchange="ChangeFieValue(this,'cer')">
+
+                                            </div>
+                                            {{end}}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" for="Pem">Pem:</label> {{if .Archivo.EPemArchivo.IEstatus}}
+                                            <div class="col-sm-5 has-feedback has-error">
+                                                <input type="text" required  readonly name="Pem" id="Pem" class="form-control" value="{{.Archivo.EPemArchivo.Pem}}" aria-required="true" aria-describedby="Pem-error"
+                                                    aria-invalid="true">
+                                                <input type="file" required  class="form-control"  id="uploadPem" name="uploadPem" onchange="ChangeFieValue(this,'pem')">
+
+                                                <span class="glyphicon form-control-feedback glyphicon-remove"></span>
+                                                <em id="Pem-error" class="error help-block">{{.Archivo.EPemArchivo.IMsj}}</em>
+                                            </div>
+                                            {{else}}
+                                            <div class="col-sm-5">
+                                                <input type="text" required  readonly name="Pem" id="Pem" class="form-control" value="{{.Archivo.EPemArchivo.Pem}}">
+                                                <input type="file" required  class="form-control"  id="uploadPem" name="uploadPem" onchange="ChangeFieValue(this,'pem')">
+                                            </div>
+                                            {{end}}
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </fieldset>
+
+                            <div class="form-group">
+                                <div class="col-md-9 text-right">
+                                    <!--<button type="button" onclick="window.location.href = '/';" class="btn btn-default btn-lg">Index</button>-->
+                                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- FIN BODY -->
+
+<!-- FIN PAGINA -->
+
+</html>

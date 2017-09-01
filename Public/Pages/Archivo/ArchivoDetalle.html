@@ -1,0 +1,126 @@
+
+<!-- ############################## <  VISTA DETALLE  > #####################################-->
+<!-- ############################## <  ArchivoDetalle.html  > #####################################-->
+<!-- ############################## <  VISTA GENERAL > #####################################-->
+
+
+<!-- INICIO PAGINA -->
+<!DOCTYPE html>
+<html lang="es">
+
+<!-- INICIO CABECERA ################################################################################-->
+<head>
+	    <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content ="IE=edge">		
+        <title></title>
+		<link rel="icon" type="image/png" href="../img/k.ico" />
+<!--#################### ESTILOS GENERALES #########################-->
+		{{template "styles_layout"}}
+<!--#################### TUS ESTILOS ###############################-->
+		
+<!--#################### SCRIPTS GENERALES #########################-->
+		{{template "scripts_layout"}}
+<!--#################### TUS SCRIPTS #########################-->		        
+    	<script src="../../Locales/Archivo/js/Archivo.js"></script>
+<!--#################### CABECERA #########################-->
+        {{template "header_layout" .SSesion }}
+</head>
+<!-- FINAL CABECERA ###################################################################################-->
+
+<!-- INICIO BODY -->
+<body>
+	
+ {{template "menu_layout" }}
+	
+	<div class="col-md-10"  style="padding-bottom: 5%;" id="SeccionCuerpo">
+		{{if .SEstado}}
+			{{if .SMsj}}
+				<div class="alert alert-success alert-dismissible text-center" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong><h3>{{.SMsj}}</h3></strong> 
+				</div>
+			{{end}}	
+			
+		{{else}}
+			
+			{{if .SMsj}}
+				<div class="alert alert-danger alert-dismissible text-center" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong><h3>{{.SMsj}}</h3></strong> 
+				</div>
+			{{end}}
+		{{end}}	
+
+			<h1>Detalle de Archivos</h1>
+			<form id="Form_Detalle_Archivo" class="form-horizontal" method="POST">
+
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="Key">Key:</label>
+							{{if .Archivo.EKeyArchivo.IEstatus}}
+								<div class="col-sm-5 has-feedback has-error">
+									<input type="text" name="Key" id="Key" class="form-control" value="{{.Archivo.EKeyArchivo.Key}}" aria-required="true" aria-describedby="Key-error" aria-invalid="true" readonly>
+									<span class="glyphicon form-control-feedback glyphicon-remove"></span>
+									<em id="Key-error" class="error help-block">{{.Archivo.EKeyArchivo.IMsj}}</em>
+								</div>
+							{{else}}
+								<div class="col-sm-5">
+									<input type="text" name="Key" id="Key" class="form-control" value="{{.Archivo.EKeyArchivo.Key}}" readonly>
+								</div>  
+							{{end}}
+						</div>
+					
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="Cer">Cer:</label>
+							{{if .Archivo.ECerArchivo.IEstatus}}
+								<div class="col-sm-5 has-feedback has-error">
+									<input type="text" name="Cer" id="Cer" class="form-control" value="{{.Archivo.ECerArchivo.Cer}}" aria-required="true" aria-describedby="Cer-error" aria-invalid="true" readonly>
+									<span class="glyphicon form-control-feedback glyphicon-remove"></span>
+									<em id="Cer-error" class="error help-block">{{.Archivo.ECerArchivo.IMsj}}</em>
+								</div>
+							{{else}}
+								<div class="col-sm-5">
+									<input type="text" name="Cer" id="Cer" class="form-control" value="{{.Archivo.ECerArchivo.Cer}}" readonly>
+								</div>  
+							{{end}}
+						</div>
+					
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="Pem">Pem:</label>
+							{{if .Archivo.EPemArchivo.IEstatus}}
+								<div class="col-sm-5 has-feedback has-error">
+									<input type="text" name="Pem" id="Pem" class="form-control" value="{{.Archivo.EPemArchivo.Pem}}" aria-required="true" aria-describedby="Pem-error" aria-invalid="true" readonly>
+									<span class="glyphicon form-control-feedback glyphicon-remove"></span>
+									<em id="Pem-error" class="error help-block">{{.Archivo.EPemArchivo.IMsj}}</em>
+								</div>
+							{{else}}
+								<div class="col-sm-5">
+									<input type="text" name="Pem" id="Pem" class="form-control" value="{{.Archivo.EPemArchivo.Pem}}" readonly>
+								</div>  
+							{{end}}
+						</div>
+					
+
+			
+				<div class="form-group">
+					<div class="col-md-9 text-right">
+							<button type="button" onclick="window.location.href = '/Archivos';" class="btn btn-default btn-lg">Index</button>
+							<button type="button" onclick="EditaArchivo('Detalle')" class="btn btn-primary btn-lg">Edita</button>
+							<button type="button" onclick="window.location.href = '/Archivos/alta';" class="btn btn-success btn-lg">Nuevo</button>
+					</div>
+				</div>
+		</form>
+	</div>
+</body>
+
+<footer>
+
+	{{template "footer_layout"}}
+    
+</footer>
+
+<!-- FIN BODY -->
+
+<!-- FIN PAGINA -->
+</html>
